@@ -1,1 +1,3 @@
-# xlsx-ext
+# json-api-to-xlsx
+
+> node ./main.js

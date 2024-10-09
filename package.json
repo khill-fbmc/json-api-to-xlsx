@@ -1,0 +1,19 @@
+{
+  "name": "json-api-to-xlsx",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "main": "./main.js",
+  "scripts": {
+    "start": "node ./main.js"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5"
+  }
+}
