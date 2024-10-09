@@ -1,3 +1,6 @@
 # json-api-to-xlsx
 
-> node ./main.js
+How to run
+
+- `npm install`
+- `npm start`

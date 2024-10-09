@@ -5,11 +5,15 @@ import * as XLSX from "xlsx/xlsx.mjs";
 
 XLSX.set_fs(fs);
 
+const outputPath = path.join(process.cwd(), "output");
+
+fs.mkdirSync(outputPath, { recursive: true });
+
 /**
  * Fetch Data
  */
 async function fetchJson(url) {
-  return fetch(url).then(res => res.json());
+  return fetch(url).then((res) => res.json());
 }
 
 /**
@@ -24,7 +28,7 @@ async function main(url) {
 
   XLSX.utils.book_append_sheet(workbook, sheet);
 
-  const outFile = path.join(process.cwd(), "output", "result.xlsx");
+  const outFile = path.join(outputPath, "result.xlsx");
 
   XLSX.writeFile(workbook, outFile, { bookType: "xlsx" });
 }
