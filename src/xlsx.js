@@ -4,30 +4,28 @@ import path from "node:path";
 import * as XLSX from "xlsx/xlsx.mjs";
 XLSX.set_fs(fs);
 
-// Define the output directory path where the generated Excel file will be stored.
-const outputPath = path.join(process.cwd(), "output");
+export const OUTPUT_PATH = path.join(process.cwd(), "output");
 
 /**
  * Creates an Excel workbook
  *
- * @param {any} data
+ * @param {{ outputPath: string }} [opts]
  */
-export async function createXLSX(data) {
-  // Ensure the output directory exists. If it doesn't, create it.
-  await fs.promises.mkdir(outputPath, { recursive: true });
-
-  // Create a new empty workbook.
+export function useWorkbook(opts) {
+  const outputPath = opts?.outputPath ?? OUTPUT_PATH;
   const workbook = XLSX.utils.book_new();
-
-  // Create a new sheet using the transformed data.
-  const sheet = XLSX.utils.json_to_sheet(data);
-
-  // Append the sheet to the workbook.
-  XLSX.utils.book_append_sheet(workbook, sheet);
-
-  // Define the output file path for the resulting Excel file.
-  const outFile = path.join(outputPath, "result.xlsx");
-
-  // Write the workbook to the file system as an XLSX file.
-  XLSX.writeFile(workbook, outFile, { bookType: "xlsx" });
+  const appendSheet = (sheet, name) => {
+    XLSX.utils.book_append_sheet(workbook, sheet, name);
+  };
+  const writeFile = (filename) => {
+    const outfile = path.join(outputPath, `${filename}.xlsx`);
+    XLSX.writeFile(workbook, outfile, { bookType: "xlsx" });
+    console.log(`Wrote To Disk:`, outfile);
+  };
+  return {
+    workbook,
+    utils: XLSX.utils,
+    writeFile,
+    appendSheet,
+  };
 }
